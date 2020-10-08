@@ -29,13 +29,16 @@ def read_input(input_file):
 
 def init():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input", help="The input file containing the list of strings to read", type=str)
-    parser.add_argument("-o", "--output", help="The output file which is read by obs", type=str)
-    parser.add_argument("-s", "--sleep", help="How long we sleep for between rewrites", type=int)
+    parser.add_argument("-i", "--input", help="The input file containing the list of strings to read", type=str,
+                        required=True)
+    parser.add_argument("-o", "--output", help="The output file which is read by obs", type=str, required=True)
+    parser.add_argument("-s", "--sleep", help="How long we sleep for between rewrites", type=int, required=True)
+
     args = parser.parse_args()
 
     lines = read_input(args.input)
     while True:
+        # Too right it's an infinite loop, run this sucker till it's cancelled.
         line = pick_a_line(lines)
         write_a_line(line, args.output)
         time.sleep(args.sleep)
